@@ -26,16 +26,6 @@ class SessionsController < ApplicationController
         end
     end
 
-    def client_user
-        if current_user && current_user.meta_type == "Client"
-            client = Client.find_by(id: current_user.meta.id)
-    end
-
-    def contractor_user
-        if current_user && current_user.meta_type == "Contractor"
-            contractor = Contractor.find_by(id: current_user.meta.id)
-    end
-
     def destroy
         session.delete :user_id
             if !session[:user_id]
