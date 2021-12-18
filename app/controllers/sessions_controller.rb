@@ -4,7 +4,11 @@ class SessionsController < ApplicationController
         user = User.find_by(email: params[:email])
         if user && user.authenticate(params[:password])
             session[:user_id] = user.id
-            render json: current_user, status: 200
+            if client_user
+                render json: client, status: 200
+            elsif contractor_user
+                render json: contractor, status: 200
+            end
         else
             render json: {
                 error: "Invalid Credentials."
@@ -20,6 +24,16 @@ class SessionsController < ApplicationController
                 error: "No one logged in."
             }
         end
+    end
+
+    def client_user
+        if current_user && current_user.meta_type == "Client"
+            client = Client.find_by(id: current_user.meta.id)
+    end
+
+    def contractor_user
+        if current_user && current_user.meta_type == "Contractor"
+            contractor = Contractor.find_by(id: current_user.meta.id)
     end
 
     def destroy
