@@ -1,18 +1,8 @@
 class AppointmentsController < ApplicationController
 
     def index
-        if params[:client_id] && client = Client.find_by_id(params[:client_id])
-            appointment = client.appointments
-            render json: appointments
-        elsif params[:contractor_id] && contractor = Contractor.find_by_id(params[:contractor_id])
-            appointments = contractor.appointments
-            render json: appointments
-        else
-            response = {
-                appointment.errors.full_messages.to_sentence
-            }
-            render json: response
-        end
+        appointments = Appointment.all
+        render json: appointment
     end
 
     def new
@@ -20,19 +10,19 @@ class AppointmentsController < ApplicationController
     end
 
     def create
-        appointment = current_user.meta.appointments.build(appointment_params)
+        appointment = Appointment.new(appointment_params)
             if appointment.save
                 render json: appointment
             else
                 response = {
                     appointment.errors.full_messages.to_sentence
                 }
-                render json: response
+                render json: response, status: :unprocessable_entity
             end
     end
     
     def show
-        appointment = Appointment.find_by(id: params[:id])
+        appointment = Appointment.find(id: params[:id])
     end
 
     private
