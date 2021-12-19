@@ -12,11 +12,13 @@ class ApplicationController < ActionController::API
     def client_user
         if current_user && current_user.meta_type == "Client"
             client = Client.find_by(id: current_user.meta.id)
+        end
     end
 
     def contractor_user
         if current_user && current_user.meta_type == "Contractor"
             contractor = Contractor.find_by(id: current_user.meta.id)
+        end
     end
 
 end

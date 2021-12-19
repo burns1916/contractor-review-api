@@ -1,5 +1,10 @@
 class ContractorsController < ApplicationController
 
+    def index
+        contractors = Contractor.all
+        render json: contractors, status: 200
+    end
+
     def new
         contractor = Contractor.new
         contractor.build_user

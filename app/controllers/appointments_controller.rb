@@ -2,7 +2,7 @@ class AppointmentsController < ApplicationController
 
     def index
         appointments = Appointment.all
-        render json: appointment
+        render json: appointments
     end
 
     def new
@@ -15,7 +15,7 @@ class AppointmentsController < ApplicationController
                 render json: appointment
             else
                 response = {
-                    appointment.errors.full_messages.to_sentence
+                    appointment: appointment.errors.full_messages.to_sentence
                 }
                 render json: response, status: :unprocessable_entity
             end
