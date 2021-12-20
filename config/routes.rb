@@ -4,10 +4,11 @@ Rails.application.routes.draw do
   get '/contractor/signup' => 'contractors#new'
   post '/contractor/signup' => 'contractors#create'
   get '/client/signup' => 'clients#new'
-  post '/client/create' => 'clients#create'
+  post '/client/signup' => 'clients#create'
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
+  get '/get_current_user' => 'sessions#get_current_user'
   # match "/auth/google_oauth2/callback" => 'sessions#googlelogin', via: [:get, :post]
 
 
