@@ -4,11 +4,7 @@ class SessionsController < ApplicationController
         user = User.find_by(email: params[:email])
         if user && user.authenticate(params[:password])
             session[:user_id] = user.id
-            if client_user
-                render json: client, status: 200
-            elsif contractor_user
-                render json: contractor, status: 200
-            end
+            render json: user, status: 200
         else
             render json: {
                 error: "Invalid Credentials."

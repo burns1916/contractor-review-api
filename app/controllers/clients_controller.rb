@@ -12,7 +12,7 @@ class ClientsController < ApplicationController
     def create
         client = Client.new(client_params)
             user = client.build_user(user_params)
-            if client.save && user.save
+            if user.save
                 session[:user_id] = user.id
                 render json: client, status: 200
             else
@@ -26,11 +26,10 @@ class ClientsController < ApplicationController
     private
 
     def client_params
-        params.require(:client).permit(:name, user_attributes: [:id, :email, :password, :meta_type, :meta_id])
+        params.permit(:name)
     end
 
     def user_params
-        params.permit(:id, :email, :password, :meta_type, :meta_id)
+        params.permit(:email, :password, :meta_type)
     end
-
 end
