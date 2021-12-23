@@ -7,13 +7,12 @@ class ContractorsController < ApplicationController
 
     def new
         contractor = Contractor.new
-        contractor.build_user
     end
 
     def create
-        contractor = Contractor.new(client_params)
-            if contractor.save
-                user = contractor.user
+        contractor = Contractor.new(contractor_params)
+            user = contractor.build_user(user_params)
+            if user.save
                 session[:user_id] = user.id
                     render json: contractor, status: 200
             else
@@ -26,8 +25,12 @@ class ContractorsController < ApplicationController
 
     private
 
-    def client_params
-        params.require(:contractor).permit(:name, user_attributes: [:email, :password])
+    def contractor_params
+        params.permit(:business_name, :license_number)
+    end
+
+    def user_params
+        params.permit(:email, :password, :meta_type)
     end
     
 end
